@@ -2,13 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const keywordInput = document.getElementById('keyword-input');
   const addBtn = document.getElementById('add-btn');
   const keywordList = document.getElementById('keyword-list');
+  const shortsToggle = document.getElementById('shorts-toggle');
 
-  function loadKeywords() {
-    chrome.storage.sync.get(['blockedKeywords'], (result) => {
+  function loadConfig() {
+    chrome.storage.sync.get(['blockedKeywords', 'blockShorts'], (result) => {
       const keywords = result.blockedKeywords || [];
       renderList(keywords);
+      shortsToggle.checked = result.blockShorts !== false;
     });
   }
+
+  shortsToggle.addEventListener('change', (e) => {
+    chrome.storage.sync.set({ blockShorts: e.target.checked });
+  });
 
   function renderList(keywords) {
     keywordList.innerHTML = '';
@@ -64,5 +70,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  loadKeywords();
+  loadConfig();
 });

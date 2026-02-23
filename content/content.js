@@ -1,10 +1,24 @@
 let blockedKeywords = [];
+let blockShorts = true;
 
-function updateKeywords() {
-  chrome.storage.sync.get(['blockedKeywords']).then((result) => {
+function updateConfig() {
+  chrome.storage.sync.get(['blockedKeywords', 'blockShorts']).then((result) => {
     blockedKeywords = (result.blockedKeywords || []).map(k => k.trim());
+    blockShorts = result.blockShorts !== false;
+    applyShortsState();
+    checkUrl();
     processDOM();
   });
+}
+
+function applyShortsState() {
+  document.body.dataset.jiukShortsBlocked = blockShorts ? "true" : "false";
+}
+
+function checkUrl() {
+  if (blockShorts && window.location.pathname.startsWith('/shorts/')) {
+    window.location.replace('https://www.youtube.com/');
+  }
 }
 
 function shouldBlock(text) {
@@ -70,18 +84,24 @@ const observer = new MutationObserver((mutations) => {
 });
 
 function init() {
-  updateKeywords();
+  updateConfig();
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (namespace === 'sync' && changes.blockedKeywords) {
-    updateKeywords();
+  if (namespace === 'sync') {
+    updateConfig();
   }
 });
 
-window.addEventListener('yt-navigate-finish', processDOM);
-window.addEventListener('spfdone', processDOM);
+window.addEventListener('yt-navigate-finish', () => {
+  checkUrl();
+  processDOM();
+});
+window.addEventListener('spfdone', () => {
+  checkUrl();
+  processDOM();
+});
 
 if (document.body) {
   init();
