@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const keywordList = document.getElementById('keyword-list');
 
   function loadKeywords() {
-    chrome.storage.local.get(['blockedKeywords'], (result) => {
+    chrome.storage.sync.get(['blockedKeywords'], (result) => {
       const keywords = result.blockedKeywords || [];
       renderList(keywords);
     });
@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function addKeyword() {
-    const newKeyword = keywordInput.value.trim().toLowerCase();
+    const newKeyword = keywordInput.value.trim();
     if (!newKeyword) return;
 
-    chrome.storage.local.get(['blockedKeywords'], (result) => {
+    chrome.storage.sync.get(['blockedKeywords'], (result) => {
       const keywords = result.blockedKeywords || [];
       if (!keywords.includes(newKeyword)) {
         keywords.push(newKeyword);
-        chrome.storage.local.set({ blockedKeywords: keywords }, () => {
+        chrome.storage.sync.set({ blockedKeywords: keywords }, () => {
           keywordInput.value = '';
           renderList(keywords);
         });
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function removeKeyword(index) {
-    chrome.storage.local.get(['blockedKeywords'], (result) => {
+    chrome.storage.sync.get(['blockedKeywords'], (result) => {
       const keywords = result.blockedKeywords || [];
       keywords.splice(index, 1);
-      chrome.storage.local.set({ blockedKeywords: keywords }, () => {
+      chrome.storage.sync.set({ blockedKeywords: keywords }, () => {
         renderList(keywords);
       });
     });

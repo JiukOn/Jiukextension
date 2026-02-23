@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 16px;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f9f9f9;
+  background-color: #f8f9fa;
   color: #202124;
 }
 
@@ -12,6 +12,7 @@ h1 {
   margin: 0 0 16px 0;
   text-align: center;
   font-weight: 600;
+  color: #1a73e8;
 }
 
 .input-container {
@@ -22,40 +23,60 @@ h1 {
 
 input[type="text"] {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border: 1px solid #dadce0;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input[type="text"]:focus {
-  border-color: #065fd4;
+  border-color: #1a73e8;
+  box-shadow: 0 1px 3px rgba(26, 115, 232, 0.2);
 }
 
 button#add-btn {
-  padding: 8px 16px;
-  background-color: #065fd4;
+  padding: 10px 16px;
+  background-color: #1a73e8;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   font-size: 14px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 button#add-btn:hover {
-  background-color: #0056b3;
+  background-color: #1557b0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 ul#keyword-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  max-height: 240px;
+  max-height: 220px;
   overflow-y: auto;
+}
+
+ul#keyword-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+ul#keyword-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+ul#keyword-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+ul#keyword-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 ul#keyword-list li {
@@ -63,25 +84,52 @@ ul#keyword-list li {
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  padding: 8px 12px;
+  padding: 10px 12px;
   margin-bottom: 8px;
   border: 1px solid #e8eaed;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 13px;
   word-break: break-all;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  transition: border-color 0.2s;
+}
+
+ul#keyword-list li:hover {
+  border-color: #d2e3fc;
 }
 
 .delete-btn {
   background: transparent;
   border: none;
-  color: #d93025;
+  color: #ea4335;
   cursor: pointer;
   font-size: 18px;
   padding: 0 0 0 8px;
   line-height: 1;
   transition: color 0.2s;
+  outline: none;
 }
 
 .delete-btn:hover {
-  color: #a50e0e;
+  color: #b31412;
+}
+
+.kofi-btn {
+  display: block;
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #ff5e5b;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 2px 4px rgba(255, 94, 91, 0.3);
+}
+
+.kofi-btn:hover {
+  background-color: #e04845;
+  transform: translateY(-1px);
 }

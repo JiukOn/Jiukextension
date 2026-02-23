@@ -1,8 +1,8 @@
 let blockedKeywords = [];
 
 function updateKeywords() {
-  chrome.storage.local.get(['blockedKeywords']).then((result) => {
-    blockedKeywords = (result.blockedKeywords || []).map(k => k.toLowerCase().trim());
+  chrome.storage.sync.get(['blockedKeywords']).then((result) => {
+    blockedKeywords = (result.blockedKeywords || []).map(k => k.trim());
     processDOM();
   });
 }
@@ -10,7 +10,22 @@ function updateKeywords() {
 function shouldBlock(text) {
   if (!text) return false;
   const lowerText = text.toLowerCase();
-  return blockedKeywords.some(keyword => keyword !== "" && lowerText.includes(keyword));
+
+  return blockedKeywords.some(keyword => {
+    if (keyword === "") return false;
+
+    const regexMatch = keyword.match(/^\/(.+)\/([a-z]*)$/);
+    if (regexMatch) {
+      try {
+        const regex = new RegExp(regexMatch[1], regexMatch[2]);
+        return regex.test(text);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    return lowerText.includes(keyword.toLowerCase());
+  });
 }
 
 function processElement(el) {
@@ -60,7 +75,7 @@ function init() {
 }
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (namespace === 'local' && changes.blockedKeywords) {
+  if (namespace === 'sync' && changes.blockedKeywords) {
     updateKeywords();
   }
 });
