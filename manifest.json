@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Jiukextension",
-  "version": "1.0",
-  "description": "Extensao para filtragem de conteudo no ecossistema Chromium.",
+  "name": "JiukBlocker",
+  "version": "0.5",
+  "description": "Extension for content filtering in the Chromium ecosystem.",
   "permissions": [
     "storage"
   ],
