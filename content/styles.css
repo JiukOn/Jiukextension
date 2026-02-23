@@ -1,0 +1,18 @@
+ytd-rich-shelf-renderer[is-shorts],
+ytd-reel-shelf-renderer {
+  display: none !important;
+}
+
+ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+ytd-video-renderer:has(a[href^="/shorts/"]),
+ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+ytd-grid-video-renderer:has(a[href^="/shorts/"]) {
+  display: none !important;
+}
+
+ytd-rich-item-renderer:has([overlay-style="SHORTS"]),
+ytd-video-renderer:has([overlay-style="SHORTS"]),
+ytd-compact-video-renderer:has([overlay-style="SHORTS"]),
+ytd-grid-video-renderer:has([overlay-style="SHORTS"]) {
+  display: none !important;
+}
